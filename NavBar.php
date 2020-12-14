@@ -34,7 +34,7 @@ $loggedin = False
     <div class="nav-item ml-auto">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link gz-nav-link" href="#">About Us</a>
+          <a class="nav-link gz-nav-link" href="AboutUs.php">About Us</a>
         </li>
         <!-- Logic to switch between buttons depending on if the user is logged in-->
         <?php if($loggedin == False) :?>
