@@ -21,7 +21,7 @@
                     <h1 class="display-5">Website URL</h1>
                 </div>
             </div>
-            <div class="row border border-white rounded m-2">
+            <div class="row border border-white rounded m-2 gz-media-bg" style="background-image: radial-gradient(ellipse at center, #448a9a,#e1b10f66)">
                 <div class="media mx-3" style="padding-top: 15px; padding-bottom: 15px;">
                     <img class="mr-3 align-self-top" style="height: auto; width: 25%;" src="misc\images\Restaurant_Test.jpg" alt="img">
                     <div class="media-body">
@@ -55,7 +55,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row border border-white rounded m-2">
+            <div class="row border border-white rounded m-2 gz-media-bg" style="background-image: radial-gradient(ellipse at center, #448a9a,#e1b10f66)">
                 <div class="media mx-3" style="padding-top: 15px; padding-bottom: 15px;">
                     <img class="mr-3 align-self-top" style="height: auto; width: 25%;" src="misc\images\Restaurant_Test.jpg" alt="img">
                     <div class="media-body">
@@ -100,7 +100,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row border border-white rounded m-2">
+            <div class="row border border-white rounded m-2 gz-media-bg" style="background-image: radial-gradient(ellipse at center, #448a9a,#e1b10f66)">
                 <div class="media mx-3" style="padding-top: 15px; padding-bottom: 15px;">
                     <img class="mr-3 align-self-top" style="height: auto; width: 25%;" src="misc\images\Restaurant_Test.jpg" alt="img">
                     <div class="media-body">
