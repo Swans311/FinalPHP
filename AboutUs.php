@@ -15,25 +15,25 @@
             <div class="media mr-auto mb-5">
                 <h1 class="glow text-white display-4 mr-3 align-self-center" style="font-family: logoFont;">Gourmandize</h1>
                 <div class="media-body">
-                    <p>Explaination of name/project/styles/reasons/execution/etc.</p>
+                    <p>Gourmandize or to eat good food, especially to excess. This is the main goal of our project, to create a site which allows people to not just find the best restaurant, but the best food. Stop ordering the best food a restaurant has to offer and instead order the food you want from the restaurant that offers the best version of it. Our site allows users to leave a review for any restaurant along with a review for each food they ate there. As our collection of reviews grows uses will be able to search for the food that they want and find the best place to get it. After all, "We all gourmandize from time to time" ~Tahm Kench 2015</p>
                 </div>
             </div>
             <hr style="width:100%!important; border-top:2px solid white;"/>
             <div class="row">
-                <div class="col p-0 pl-2 border-right border-white">
+                <div class="col px-1 border-right border-white">
                     <div class="media mr-auto">
                         <div class="media-body">
                             <h3>Casey Viens</h3>
                             <ul>
-                                <li><u><a class="text-white"href="casey.viens@gmail.com">Email</a></u></li>
+                                <li><u><a class="text-white"href="mailto:casey.viens@gmail.com">Email</a></u></li>
                                 <li><u><a class="text-white"href="https://github.com/Casey-Viens">Github Profile</a></u></li>
                             </ul>
                         </div>
                         <img class="mr-3 align-self-top" style="height: auto; width: 28%;" src="misc\images\Casey_Bio.jpg" alt="img">
                     </div>
-                    <p>Explaination of persons part of project</p>
+                    <p>My main role with the project was learning Bootstrap and using it to design our site around our theme. With food in mind, we wanted to design the site around a retro diner theme, with a checkered tiled background and glowing neon lights. As I completed styling each page I met with my group to make adjustments and make sure we all agreed on the style choices that were made. This was definitly and process, but I learned a lot from it. </p>
                 </div>
-                <div class="col p-0 pl-2 border-right border-white">
+                <div class="col px-1 border-right border-white">
                     <div class="media mr-auto">
                         <div class="media-body">
                             <h3>Joseph Sherry</h3>
@@ -46,7 +46,7 @@
                     </div>
                     <p>Explaination of persons part of project</p>
                 </div>
-                <div class="col p-0 pl-2">
+                <div class="col px-1">
                     <div class="media mr-auto">
                         <div class="media-body">
                             <h3>David Swansey</h3>
