@@ -578,8 +578,6 @@
         $resReviews = getAllReviewsForRestaurant($restaurantID);
         $resCatArray = [];
 
-        var_dump($resReviews);
-
         foreach($resReviews as $resReview)
         {
             $categories = explode(",",$resReview['Category']);
@@ -595,4 +593,3 @@
         //Slices the first $numCategories values and returns an array with the categories
         return array_keys(array_slice($countArray, 0, $numCategories));
     }
-    getCommonRestaurantCategories(1,1);
