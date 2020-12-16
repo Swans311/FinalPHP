@@ -72,6 +72,7 @@
 
         $stmt->bindValue(':userID', $userID);
 
+        $stmt->execute();
         $results = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $results['Username'];
@@ -83,6 +84,7 @@
 
         $stmt->bindValue(':userID', $userID);
 
+        $stmt->execute();
         $results = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $results;
@@ -133,6 +135,7 @@
         $stmt->bindValue(':userID', $userID);
         $stmt->bindValue(':revDate', $time);
 
+        $stmt->execute();
         $results = $stmt->fetch(PDO::FETCH_ASSOC);
         $resRevID = $results['ResReview_ID'];
 
@@ -213,6 +216,7 @@
         //LoopThrough connected ItemReviews
         $stmt = $db->query("SELECT Review_ID, COUNT(*) AS reviewCount FROM review WHERE ResReview_ID = :ID;");
         $stmt->bindValue(':ID', $resReviewID);
+        $stmt->execute();
         $results = $stmt->fetch(PDO::FETCH_ASSOC);   
         
         $reviewCount = $results['reviewCount'];//Number
@@ -263,6 +267,7 @@
 
         $stmt->bindValue(':ID', $resReviewID);
 
+        $stmt->execute();
         $results = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $results;
@@ -270,11 +275,12 @@
     function getItemReview($reviewID)
     {
         global $db;
-        $stmt = $db->prepare("SELECT * FROM review WHERE Review_ID =:ID");
+        $stmt = $db->prepare("SELECT * FROM review WHERE Review_ID =:ID;");
 
         $stmt->bindValue(':ID', $reviewID);
-
-        $results = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return $results;
     }
@@ -284,6 +290,8 @@
         //get connected ItemReviews
         $stmt = $db->query("SELECT Review_ID, COUNT(*) AS reviewCount FROM review WHERE ResReview_ID = :ID;");
         $stmt->bindValue(':ID', $resReviewID);
+
+        $stmt->execute();
         $results = $stmt->fetch(PDO::FETCH_ASSOC);   
         
         $reviewCount = $results['reviewCount'];//Number
@@ -301,6 +309,8 @@
         //get connected ItemReviews
         $stmt = $db->query("SELECT ResReview_ID, COUNT(*) AS reviewCount FROM restaurantreview WHERE Restaurant_ID = :ID;");
         $stmt->bindValue(':ID', $restaurantID);
+
+        $stmt->execute();
         $results = $stmt->fetch(PDO::FETCH_ASSOC);   
         
         $reviewCount = $results['reviewCount'];//Number
@@ -318,6 +328,8 @@
         //get connected ItemReviews
         $stmt = $db->query("SELECT Review_ID, COUNT(*) AS reviewCount FROM review WHERE Item_ID = :ID;");
         $stmt->bindValue(':ID', $itemID);
+
+        $stmt->execute();
         $results = $stmt->fetch(PDO::FETCH_ASSOC);   
         
         $reviewCount = $results['reviewCount'];//Number
@@ -335,6 +347,8 @@
         //get connected ItemReviews
         $stmt = $db->query("SELECT ResReview_ID, COUNT(*) AS reviewCount FROM restaurantreview WHERE User_ID = :ID;");
         $stmt->bindValue(':ID', $userID);
+
+        $stmt->execute();
         $results = $stmt->fetch(PDO::FETCH_ASSOC);   
         
         $reviewCount = $results['reviewCount'];//Number
