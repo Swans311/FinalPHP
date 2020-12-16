@@ -355,7 +355,7 @@
         //loop through and append to list
         foreach($results as $result)
         {
-            $reviewID = $result;
+            $reviewID = $result['ResReview_ID'];
             array_push($resReviewList, getRestaurantReview($reviewID));
         }
         return $resReviewList;
