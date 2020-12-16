@@ -345,4 +345,102 @@
             array_push($resReviewList, getRestaurantReview($reviewID));
         return $resReviewList;
     }
+    function searchUser($username, $email, $first, $last)
+    {
+        global $db;
+       
+        $binds = array();
+        $sql = "SELECT * FROM rusers WHERE 0=0 ";
+        if ($username != "") {
+             $sql .= " AND Username LIKE :name";
+             $binds['name'] = '%'.$username.'%';
+        }
+        if ($email != "")
+        {
+             $sql .= " AND User_Email LIKE :email";
+             $binds['email'] = '%'.$email.'%';
+        }
+        if ($first != "")
+        {
+             $sql .= " AND FName LIKE :fname";
+             $binds['fname'] = '%'.$first.'%';
+        }
+        if ($email != "")
+        {
+             $sql .= " AND LName LIKE :lname";
+             $binds['lname'] = '%'.$last.'%';
+        }
 
+        $sql .= " ORDER BY Username DESC";
+ 
+        $stmt = $db->prepare($sql);
+       
+         $results = array();
+         if ($stmt->execute($binds) && $stmt->rowCount() > 0) {
+             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+         }
+         return ($results);
+    }
+    function editItemReview($reviewID, $rating, $anonymous, $categories, $review, $imageFilePath)
+    {
+        global $db;
+
+        $results = "Data NOT Updated";
+        
+        $stmt = $db->prepare("UPDATE reviews SET Star_lvl = :rating, Uname_Visible = :anon, Category = :categories, Review = :review WHERE Review_ID=:id");
+        
+        $stmt->bindValue(':rating', $rating);
+        $stmt->bindValue(':anon', $anonymous);
+        $stmt->bindValue(':categories', $categories);
+        $stmt->bindValue(':review', $review);
+        $stmt->bindValue(':id', $reviewID);
+
+      
+        if ($stmt->execute() && $stmt->rowCount() > 0) {
+            $results = 'Data Updated';
+        }
+        
+        return ($results);
+    }
+    function editRestaurantReview( $resReviewID, $review, $rating, $anonymous, $imageFilePath)
+    {
+        global $db;
+
+        $results = "Data NOT Updated";
+        
+        $stmt = $db->prepare("UPDATE reviews SET Star_lvl = :rating, Uname_Visible = :anon, Review = :review WHERE Review_ID=:id");
+        
+        $stmt->bindValue(':rating', $rating);
+        $stmt->bindValue(':anon', $anonymous);
+        $stmt->bindValue(':review', $review);
+        $stmt->bindValue(':id', $resReviewID);
+
+        if ($stmt->execute() && $stmt->rowCount() > 0) 
+        {
+            $results = 'Data Updated';
+        }
+        
+        return ($results);
+    }
+    function editRestaurant( $restaurantID, $name, $address, $phone, $url, $categories)
+    {
+        global $db;
+
+        $results = "Data NOT Updated";
+        
+        $stmt = $db->prepare("UPDATE restaurant SET Restaurant_Name = :resName, ResAddress = :addr, Phone = :phone, Restaurant_URL = :resURL, Category = :categories WHERE Review_ID=:id");
+        
+        $stmt->bindValue(':resName', $name);
+        $stmt->bindValue(':addr', $address);
+        $stmt->bindValue(':phone', $phone);
+        $stmt->bindValue(':resURL', $url);
+        $stmt->bindValue(':categories', $categories);
+        $stmt->bindValue(':id', $restaurantID);
+
+        if ($stmt->execute() && $stmt->rowCount() > 0) 
+        {
+            $results = 'Data Updated';
+        }
+        
+        return ($results);
+    }
