@@ -16,10 +16,11 @@
     }
 
 
+
     function MostPopCat()
     {
         global $db;
-        $stmt = $db->prepare("SELECT Category, COUNT(*) AS CatCount FROM Review  GROUP BY Category ORDER BY Item_ID LIMIT 10");
+        $stmt = $db->prepare("SELECT Category, COUNT(*) AS CatCount FROM Review  GROUP BY Category ORDER BY Item_ID LIMIT 5");
         $result=array();
 
         if ($stmt->execute() && $stmt->rowCount()>0){
@@ -48,6 +49,8 @@
 
 
 
+
+
 ?>
 
 
@@ -58,6 +61,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gourmandize | Sign Up</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <script
+	    src="https://code.jquery.com/jquery-3.3.1.min.js"
+	    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+    </script>
 </head>
 <body>
     <div class="container gz-div-glow">
@@ -75,9 +84,13 @@
                     {
                         echo "<tr>";
                         foreach($Cat as $cc):
-                            echo "<td>";
-                            echo "<input type='button' value='Find ". $cc['Category'] ." Nearby'/>";
-                            echo "</td>";  
+                            <form action="homepage.php" method="get">
+                                <input type="button" class="btn btn-outline-light" value="Find <?=$cc['Category'];?> Nearby">
+                            </form>
+
+
+
+
                         endforeach;
                         echo "</tr>";
                     }
@@ -89,3 +102,6 @@
     </div>
 </body>
 </html>
+
+
+
