@@ -145,12 +145,13 @@
             addItemReview($restaurantID, $userID, $itemReviewList['itemID'], $resRevID, $time, $itemReviewList['rating'], $itemReviewList['review'], $anonymous, ''/*$itemReviewList['imageFilePath']*/);
         }
     }
-    function searchByRestaurant($name, $category)
+    //use minRating = -1 to ignore rating and 0 to get all restaurants that have been reviewed at least once
+    function searchByRestaurant($name, $category, $minRating)
     {
         global $db;
        
        $binds = array();
-       $sql = "SELECT Restaurant_ID, Restaurant_Name, ResAddress, Phone, Restaurant_URL FROM restaurant WHERE 0=0 ";
+       $sql = "SELECT * FROM restaurant WHERE 0=0 ";
        if ($name != "") {
             $sql .= " AND Restaurant_Name LIKE :name";
             $binds['name'] = '%'.$name.'%';
@@ -168,16 +169,18 @@
         $returnArray = [];
         foreach($results as $result)
             if(in_array($category, getCommonRestaurantCategories($result['Restaurant_ID'], 5)) || $category == '')
-                array_push($returnArray, $result);
+                if(calculateRestaurantStarRating($result['Restaurant_ID']) >= $minRating)
+                    array_push($returnArray, $result);
 
         return ($returnArray);
     }
-    function searchByItem($name, $category)
+    //use minRating = -1 to ignore rating and 0 to get all items that have been reviewed at least once
+    function searchByItem($name, $category, $minRating)
     {
         global $db;
        
        $binds = array();
-       $sql = "SELECT Item_ID, Restaurant_ID, ItemName FROM menuitem WHERE 0=0 ";
+       $sql = "SELECT * FROM menuitem WHERE 0=0 ";
        if ($name != "") {
             $sql .= " AND ItemName LIKE :name";
             $binds['name'] = '%'.$name.'%';
@@ -194,7 +197,8 @@
         $returnArray = [];
         foreach($results as $result)
             if(in_array($category, getCommonItemCategories($result['Item_ID'], 5)) || $category == '')
-                array_push($returnArray, $result);
+                if(calculateItemStarRating($result['Item_ID']) >= $minRating)
+                    array_push($returnArray, $result);
 
         return ($returnArray);
     }
@@ -594,7 +598,7 @@
     }
     function getMostCommonCategoriesAllItems($numCategories)
     {
-        $allItems = searchByItem("","");
+        $allItems = searchByItem("","", -1);
         $itemReviews = [];
 
         foreach($allItems as $item)
