@@ -1,4 +1,5 @@
 <?php
+    include (__DIR__ . '/db.php');
 
     function addUser($username, $email, $hashedPass, $first, $last, $imageFilePath)
     {
