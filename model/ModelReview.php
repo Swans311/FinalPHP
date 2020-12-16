@@ -200,7 +200,7 @@
     function deleteRestaurantReview($resReviewID)
     {
         global $db;
-        $stmt = $db->query("DELETE FROM restaurantreview WHERE ResReview_ID = :ID;");
+        $stmt = $db->prepare("DELETE FROM restaurantreview WHERE ResReview_ID = :ID;");
 
         $stmt->bindValue(':ID', $resReviewID);
 
@@ -214,7 +214,7 @@
 
         global $db;
         //LoopThrough connected ItemReviews
-        $stmt = $db->query("SELECT Review_ID, COUNT(*) AS reviewCount FROM review WHERE ResReview_ID = :ID;");
+        $stmt = $db->prepare("SELECT Review_ID, COUNT(*) AS reviewCount FROM review WHERE ResReview_ID = :ID;");
         $stmt->bindValue(':ID', $resReviewID);
         $stmt->execute();
         $results = $stmt->fetch(PDO::FETCH_ASSOC);   
@@ -233,7 +233,7 @@
     function deleteItemReview($itemReviewID)
     {
         global $db;
-        $stmt = $db->query("DELETE FROM review WHERE Review_ID = :ID;");
+        $stmt = $db->prepare("DELETE FROM review WHERE Review_ID = :ID;");
 
         $stmt->bindValue(':ID', $itemReviewID);
 
@@ -280,7 +280,7 @@
         $stmt->bindValue(':ID', $reviewID);
         
         $stmt->execute();
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $results = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $results;
     }
@@ -288,76 +288,76 @@
     {
         global $db;
         //get connected ItemReviews
-        $stmt = $db->query("SELECT Review_ID, COUNT(*) AS reviewCount FROM review WHERE ResReview_ID = :ID;");
+        $stmt = $db->prepare("SELECT Review_ID FROM review WHERE ResReview_ID = :ID;");
         $stmt->bindValue(':ID', $resReviewID);
 
         $stmt->execute();
-        $results = $stmt->fetch(PDO::FETCH_ASSOC);   
-        
-        $reviewCount = $results['reviewCount'];//Number
-        $reviewIDs = $results['Review_ID'];//Array
+        $results = $stmt->fetchALL(PDO::FETCH_ASSOC);   
 
         $itemReviewList = array();
         //loop through and append to list
-        foreach($reviewIDs as $reviewID)
+        foreach($results as $result)
+        {
+            $reviewID = $result['Review_ID'];
             array_push($itemReviewList, getItemReview($reviewID));
+        }
         return $itemReviewList;
     }
     function getAllReviewsForRestaurant($restaurantID)
     {
         global $db;
         //get connected ItemReviews
-        $stmt = $db->query("SELECT ResReview_ID, COUNT(*) AS reviewCount FROM restaurantreview WHERE Restaurant_ID = :ID;");
+        $stmt = $db->prepare("SELECT ResReview_ID FROM restaurantreview WHERE Restaurant_ID = :ID;");
         $stmt->bindValue(':ID', $restaurantID);
 
         $stmt->execute();
-        $results = $stmt->fetch(PDO::FETCH_ASSOC);   
-        
-        $reviewCount = $results['reviewCount'];//Number
-        $resReviewIDs = $results['ResReview_ID'];//Array
+        $results = $stmt->fetchALL(PDO::FETCH_ASSOC);   
 
         $resReviewList = array();
         //loop through and append to list
-        foreach($resReviewIDs as $resReviewID)
+        foreach($results as $result)
+        {
+            $resReviewID = $result['ResReview_ID'];
             array_push($resReviewList, getRestaurantReview($resReviewID));
+        }
         return $resReviewList;
     }
     function getAllReviewsForItem($itemID)
     {
         global $db;
         //get connected ItemReviews
-        $stmt = $db->query("SELECT Review_ID, COUNT(*) AS reviewCount FROM review WHERE Item_ID = :ID;");
+        $stmt = $db->prepare("SELECT Review_ID FROM review WHERE Item_ID = :ID;");
         $stmt->bindValue(':ID', $itemID);
 
         $stmt->execute();
-        $results = $stmt->fetch(PDO::FETCH_ASSOC);   
-        
-        $reviewCount = $results['reviewCount'];//Number
-        $reviewIDs = $results['Review_ID'];//Array
+        $results = $stmt->fetchALL(PDO::FETCH_ASSOC);   
 
         $itemReviewList = array();
         //loop through and append to list
-        foreach($reviewIDs as $reviewID)
+        foreach($results as $result)
+        {
+            $reviewID = $result['Review_ID'];
             array_push($itemReviewList, getItemReview($reviewID));
+        }
         return $itemReviewList;
     }
     function getAllResReviewsByUser($userID)
     {
         global $db;
         //get connected ItemReviews
-        $stmt = $db->query("SELECT ResReview_ID, COUNT(*) AS reviewCount FROM restaurantreview WHERE User_ID = :ID;");
+        $stmt = $db->prepare("SELECT ResReview_ID FROM restaurantreview WHERE User_ID = :ID;");
         $stmt->bindValue(':ID', $userID);
 
         $stmt->execute();
-        $results = $stmt->fetch(PDO::FETCH_ASSOC);   
-        
-        $reviewCount = $results['reviewCount'];//Number
-        $reviewIDs = $results['ResReview_ID'];//Array
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);   
 
         $resReviewList = array();
         //loop through and append to list
-        foreach($reviewIDs as $reviewID)
+        foreach($results as $result)
+        {
+            $reviewID = $result;
             array_push($resReviewList, getRestaurantReview($reviewID));
+        }
         return $resReviewList;
     }
     function searchUser($username, $email, $first, $last)
