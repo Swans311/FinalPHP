@@ -145,6 +145,7 @@
             addItemReview($restaurantID, $userID, $itemReviewList['itemID'], $resRevID, $time, $itemReviewList['rating'], $itemReviewList['review'], $anonymous, ''/*$itemReviewList['imageFilePath']*/);
         }
     }
+    //TODO:: Come back and change code to not expect categories in table
     function searchByRestaurant($name, $category)
     {
         global $db;
@@ -171,6 +172,7 @@
         }
         return ($results);
     }
+    //TODO:: Come back and change code to not expect categories in table
     function searchByItem($name, $category)
     {
         global $db;
@@ -241,17 +243,32 @@
 
         return( $stmt->rowCount() > 0);
     }
-    function addRestaurant($name, $address, $phone, $url, $categories)
+    function addRestaurant($name, $address, $phone, $url)
     {
         global $db;
         $results = 'Data NOT Added';
-        $stmt = $db->prepare("INSERT INTO restaurant SET Restaurant_Name = :resName, ResAddress = :resAddress, Phone = :phone, Restaurant_URL = :resURL, Category = :categories");
+        $stmt = $db->prepare("INSERT INTO restaurant SET Restaurant_Name = :resName, ResAddress = :resAddress, Phone = :phone, Restaurant_URL = :resURL");
 
         $stmt -> bindValue(':resName', $name);
         $stmt -> bindValue(':resAddress', $address);
         $stmt -> bindValue(':phone', $phone);
         $stmt -> bindValue(':resURL', $url);
-        $stmt -> bindValue(':categories', $categories);
+        
+        if ($stmt->execute() && $stmt->rowCount() > 0) 
+        {
+            $results = 'Data Added';
+        }
+        
+        return ($results);
+    }
+    function addItem($restaurantID, $name)
+    {
+        global $db;
+        $results = 'Data NOT Added';
+        $stmt = $db->prepare("INSERT INTO menuItem SET Restaurant_ID = :resID, ItemName = :iName");
+
+        $stmt -> bindValue(':resID', $restaurantID);
+        $stmt -> bindValue(':iName', $name);
         
         if ($stmt->execute() && $stmt->rowCount() > 0) 
         {
@@ -459,3 +476,123 @@
         
         return ($results);
     }
+
+
+    /*
+
+        #############################################################################################
+        These would have been in fucntions.php but to avoid recursive includes I put them here
+        Everything below this comment references above functions and does not access SQL table itself
+        #############################################################################################
+
+    */
+
+    //Returns -1 if no results
+    function calculateItemStarRating($itemID)
+    {
+        $itemReviews = getAllReviewsForItem($itemID);
+        
+        $count = 0;
+        $star = 0;
+
+        foreach($itemReviews as $itemReview)
+        {
+            $count++;
+            $star += $itemReview['Star_lvl'];
+        }
+        if($count == 0)
+            return -1;
+        else
+        {
+            $star /= $count;
+            return $star;
+        }
+    }
+    //Returns -1 if no results
+    function calculateRestaurantStarRating($restaurantID)
+    {
+        $resReviews = getAllReviewsForRestaurant($restaurantID);
+        
+        $count = 0;
+        $star = 0;
+
+        foreach($resReviews as $resReview)
+        {
+            $count++;
+            $star += $resReview['Star_lvl'];
+        }
+        if($count == 0)
+            return -1;
+        else
+        {
+            $star /= $count;
+            return $star;
+        }
+    }
+    function calculateAvgStarRatingFromUser($userID)
+    {
+        $resReviews = getAllResReviewsByUser($userID);
+        $itemReviews = [];
+
+        $count = 0;
+        $star = 0;
+
+        foreach($resReviews as $resReview)
+        {
+            $count++;
+            $star += $resReview['Star_lvl'];
+            $temp = getItemsInRestaurantReview($resReview['ResReview_ID']);
+            foreach($temp as $itemReview)
+                array_push($itemReviews, $itemReview);
+        }
+        foreach($itemReviews as $itemReview)
+        {
+            $count++;
+            $star += $itemReview['Star_lvl'];
+        }
+        $star /= $count;
+        return $star;
+    }
+    function getCommonItemCategories($itemID, $numCategories)
+    {
+        $itemReviews = getAllReviewsForItem($itemID);
+        $itemCatArray = [];
+
+        foreach($itemReviews as $itemReview)
+        {
+            $categories = explode(",",$itemReview['Category']);
+            foreach($categories as $category)
+                array_push($itemCatArray, $category);
+        }
+        //An array with the categories as labels and number of instances as values
+        $countArray = array_count_values($itemCatArray);
+
+        //Sorts array by most frequent first descending order
+        arsort($countArray);
+
+        //Slices the first $numCategories values and returns an array with the categories
+        return array_keys(array_slice($countArray, 0, $numCategories));
+    }
+    function getCommonRestaurantCategories($restaurantID, $numCategories)
+    {
+        $resReviews = getAllReviewsForRestaurant($restaurantID);
+        $resCatArray = [];
+
+        var_dump($resReviews);
+
+        foreach($resReviews as $resReview)
+        {
+            $categories = explode(",",$resReview['Category']);
+            foreach($categories as $category)
+                array_push($resCatArray, $category);
+        }
+        //An array with the categories as labels and number of instances as values
+        $countArray = array_count_values($resCatArray);
+
+        //Sorts array by most frequent first descending order
+        arsort($countArray);
+
+        //Slices the first $numCategories values and returns an array with the categories
+        return array_keys(array_slice($countArray, 0, $numCategories));
+    }
+    getCommonRestaurantCategories(1,1);
