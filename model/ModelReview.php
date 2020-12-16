@@ -145,21 +145,15 @@
             addItemReview($restaurantID, $userID, $itemReviewList['itemID'], $resRevID, $time, $itemReviewList['rating'], $itemReviewList['review'], $anonymous, ''/*$itemReviewList['imageFilePath']*/);
         }
     }
-    //TODO:: Come back and change code to not expect categories in table
     function searchByRestaurant($name, $category)
     {
         global $db;
        
        $binds = array();
-       $sql = "SELECT Restaurant_ID, Restaurant_Name, Address, Phone, Restaurant_URL, Category FROM restaurant WHERE 0=0 ";
+       $sql = "SELECT Restaurant_ID, Restaurant_Name, ResAddress, Phone, Restaurant_URL FROM restaurant WHERE 0=0 ";
        if ($name != "") {
             $sql .= " AND Restaurant_Name LIKE :name";
             $binds['name'] = '%'.$name.'%';
-       }
-       if ($category != "")
-       {
-            $sql .= " AND Category LIKE :category";
-            $binds['category'] = '%'.$category.'%';
        }
        
        $sql .= " ORDER BY Restaurant_Name DESC";
@@ -170,23 +164,23 @@
         if ($stmt->execute($binds) && $stmt->rowCount() > 0) {
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
-        return ($results);
+
+        $returnArray = [];
+        foreach($results as $result)
+            if(in_array($category, getCommonRestaurantCategories($result['Restaurant_ID'], 5)) || $category == '')
+                array_push($returnArray, $result);
+
+        return ($returnArray);
     }
-    //TODO:: Come back and change code to not expect categories in table
     function searchByItem($name, $category)
     {
         global $db;
        
        $binds = array();
-       $sql = "SELECT Item_ID, Restaurant_ID, ItemName, Category FROM menuitem WHERE 0=0 ";
+       $sql = "SELECT Item_ID, Restaurant_ID, ItemName FROM menuitem WHERE 0=0 ";
        if ($name != "") {
             $sql .= " AND ItemName LIKE :name";
             $binds['name'] = '%'.$name.'%';
-       }
-       if ($category != "")
-       {
-            $sql .= " AND Category LIKE :category";
-            $binds['category'] = '%'.$category.'%';
        }
        
        $sql .= " ORDER BY ItemName DESC";
@@ -197,7 +191,12 @@
         if ($stmt->execute($binds) && $stmt->rowCount() > 0) {
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
-        return ($results);
+        $returnArray = [];
+        foreach($results as $result)
+            if(in_array($category, getCommonItemCategories($result['Item_ID'], 5)) || $category == '')
+                array_push($returnArray, $result);
+
+        return ($returnArray);
     }
     function deleteRestaurantReview($resReviewID)
     {
@@ -571,7 +570,7 @@
         arsort($countArray);
 
         //Slices the first $numCategories values and returns an array with the categories
-        return array_keys(array_slice($countArray, 0, $numCategories));
+        return array_keys(array_slice($countArray, 0, count($countArray) ? $numCategories : count($countArray)));
     }
     function getCommonRestaurantCategories($restaurantID, $numCategories)
     {
@@ -589,7 +588,35 @@
 
         //Sorts array by most frequent first descending order
         arsort($countArray);
+        
+        //Slices the first $numCategories values and returns an array with the categories
+        return array_keys(array_slice($countArray, 0, $numCategories <= count($countArray) ? $numCategories : count($countArray)));
+    }
+    function getMostCommonCategoriesAllItems($numCategories)
+    {
+        $allItems = searchByItem("","");
+        $itemReviews = [];
+
+        foreach($allItems as $item)
+        {
+            $temp = getAllReviewsForItem($item['Item_ID']);
+           foreach($temp as $review)
+                array_push($itemReviews, $review);
+        }
+        $itemCatArray = [];
+
+        foreach($itemReviews as $itemReview)
+        {
+            $categories = explode(",", $itemReview['Category']);
+            foreach($categories as $category)
+                array_push($itemCatArray, $category);
+        }
+        //An array with the categories as labels and number of instances as values
+        $countArray = array_count_values($itemCatArray);
+
+        //Sorts array by most frequent first descending order
+        arsort($countArray);
 
         //Slices the first $numCategories values and returns an array with the categories
-        return array_keys(array_slice($countArray, 0, $numCategories));
+        return array_keys(array_slice($countArray, 0, count($countArray) ? $numCategories : count($countArray)));
     }
