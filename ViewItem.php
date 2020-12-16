@@ -20,6 +20,7 @@
                     <h1 class="display-4">Stars</h1>
                 </div>
             </div>
+            <!-- A Loop Start (Person per food)-->
             <div class="row border border-white rounded m-2" style="background-image: radial-gradient(ellipse at center, #448a9a,#e1b10f66)">
                 <div class="media mx-3" style="padding-top: 15px; padding-bottom: 15px;">
                     <img class="mr-3 align-self-center" style="height: auto; width: 25%;" src="misc\images\Fries_Test.jpeg" alt="img">
@@ -32,6 +33,7 @@
                     </div>
                 </div>
             </div>
+            <!-- A Loop end -->
             <div class="row border border-white rounded m-2" style="background-image: radial-gradient(ellipse at center, #448a9a,#e1b10f66)">
                 <div class="media mx-3" style="padding-top: 15px; padding-bottom: 15px;">
                     <img class="mr-3 align-self-center" style="height: auto; width: 25%;" src="misc\images\Fries_Test.jpeg" alt="img">
