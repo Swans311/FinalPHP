@@ -15,21 +15,17 @@ $loggedin = False
 <body class="gz-body-bg"> 
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark text-white shadow-lg p-3 mb-6 gz-nav-bg">
     <!-- Project Name/Logo-->
-    <a class="navbar-brand glow" href="homepage.php" style="font-family: logoFont; font-size: 30px;">Gourmandize</a>
+    <a class="navbar-brand glow" href="NavBar.php" style="font-family: logoFont; font-size: 30px;">Gourmandize</a>
       <!-- Nav links, pushed to left-->
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
           <a class="nav-link gz-nav-link" href="homepage.php">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link gz-nav-link" href="#">Review</a>
+          <a class="nav-link gz-nav-link" href="SearchResults.php">Search</a>
         </li>
       </ul>
-    <!-- Search bar, centered on nav-->
-    <form class="navbar-form mx-auto d-flex">
-      <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn" type="submit"><img src="misc/img/search_24.svg" alt="Search Icon"><img/></button>
-    </form>
+
     <!-- Nav links, pushed to right-->
     <div class="nav-item ml-auto">
       <ul class="navbar-nav">
