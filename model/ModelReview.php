@@ -73,7 +73,7 @@
         $stmt->bindValue(':userID', $userID);
 
         $stmt->execute();
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $results = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $results['Username'];
     }
