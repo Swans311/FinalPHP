@@ -1,5 +1,5 @@
 <?php 
-    include(__DIR__.'/NavBar.php');
+    include (__DIR__.'/NavBar.php');
 ?>
 
 <!DOCTYPE html>
@@ -38,8 +38,8 @@
                         <div class="media-body">
                             <h3>Joseph Sherry</h3>
                             <ul>
-                                <li><a>Email</a></li>
-                                <li><a>Github Profile</a></li>
+                                <li><u><a class="text-white"href="mailto:jsherry10155@gmail.com">Email</a></u></li>
+                                <li><u><a class="text-white" href="https://github.com/FieryXJoe">Github Profile</a></u></li>
                             </ul>
                         </div>
                         <img class="mr-3 align-self-top" style="height: auto; width: 28%;" src="misc\images\Casey_Bio.jpg" alt="img">
@@ -51,8 +51,8 @@
                         <div class="media-body">
                             <h3>David Swansey</h3>
                             <ul>
-                                <li><a>Email</a></li>
-                                <li><a>Github Profile</a></li>
+                                <li><u><a class="text-white"href="mailto:DSwansey1@gmail.com">Email</a></u></li>
+                                <li><u><a class="text-white"href="https://github.com/Swans311">Github Profile</a></u></li>
                             </ul>
                         </div>
                         <img class="mr-3 align-self-top" style="height: auto; width: 28%;" src="misc\images\Casey_Bio.jpg" alt="img">
