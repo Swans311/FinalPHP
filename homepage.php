@@ -1,59 +1,7 @@
 <?php
     include (__DIR__.'/NavBar.php');
-    include (__DIR__. '/Model/db.php');
-
-
-    function getCategory()
-    {
-        global $db;
-        $stmt = $db->prepare("SELECT * FROM Review ORDER BY Item_ID");
-
-        $category = array();
-        if ($stmt->execute() && $stmt-> rowCount()>0){
-            $category=$stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
-        return($category);
-    }
-
-
-
-    function MostPopCat()
-    {
-        global $db;
-        $stmt = $db->prepare("SELECT Category, COUNT(*) AS CatCount FROM Review  GROUP BY Category ORDER BY Item_ID LIMIT 5");
-        $result=array();
-
-        if ($stmt->execute() && $stmt->rowCount()>0){
-           $result=$stmt->fetchAll(PDO::FETCH_ASSOC); 
-        }
-        return ($result);
-    }
-
-
-    $category=getCategory();
-
-    $results=array();
-    $results[0]=array();
-
-    foreach($category as $cc){
-        array_push($results[0], $cc['Category']);
-    }
-
-    $Cat=MostPopCat();
-    $cat1=array();
-    $cat1[0]=array();
-
-    foreach($Cat as $CC){
-        array_push($cat1[0], $CC['Category']);
-    }
-
-
-
-
-
+    include (__DIR__. '/Model/ModelReview.php');
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -77,25 +25,27 @@
                 <p>Gourmandize was created by three friends who all have a passion for eating. They always thought that something was missing when they went to look for food and only saw reviews for the restaurant as a whole. One day while Casey Viens (Chairman) ordered subpar French Fries, he knew that this would be the straw the broke the camel's back. A mere few weeks later is when he got together with his two vice-chairs, Joe and Dave they came up with Gourmandize&trade; to never have this kind of experience again. </p>
                 <h4 class="text-center">Local Cuisine</h4>
                 <hr/>
-                <table class="table-borderless">
-                    <?php 
-                    $cc=MostPopCat();
-                    for($i=0; $i<1; $i++)
-                    {
-                        echo "<tr>";
-                        foreach($Cat as $cc):
-                            <form action="homepage.php" method="get">
-                                <input type="button" class="btn btn-outline-light" value="Find <?=$cc['Category'];?> Nearby">
-                            </form>
-
-
-
-
-                        endforeach;
-                        echo "</tr>";
-                    }
-                    ?>
-                </table>
+                <form action="homepage.php" method="get" style="width:50%;margin:auto;">
+                    <table class="table-borderless">
+                        <?php 
+                            $Cat = getMostCommonCategoriesAllItems(5);
+                            $rowCount = 0;
+                            foreach($Cat as $cc):
+                                if($rowCount == 0)
+                                    echo '<tr>';
+                                $rowCount ++;
+                                    echo '<td><input type="button" class="btn btn-outline-light" value="Find ' . $cc . ' Nearby"></td>';
+                                if($rowCount == 3)
+                                {
+                                    echo "</tr>";
+                                    $rowCount = 0;
+                                }
+                            endforeach;
+                            if($rowCount != 0)
+                                echo "</tr>";
+                        ?>
+                    </table>
+                </form>
                 </div>
             </div>
         </div>
