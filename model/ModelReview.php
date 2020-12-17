@@ -80,7 +80,7 @@
     function getRestautantName($restaurantID)
     {
         global $db;
-        $stmt = $db->prepare("SELECT Restaurant_Name FROM restaurant WHERE restaurant_ID =:resID");
+        $stmt = $db->prepare("SELECT Restaurant_Name FROM restaurant WHERE Restaurant_ID =:resID");
 
         $stmt->bindValue(':resID', $restaurantID);
 
@@ -89,12 +89,48 @@
 
         return $results['Restaurant_Name'];
     }
+    function getItemName($itemID)
+    {
+        global $db;
+        $stmt = $db->prepare("SELECT ItemName FROM menuitem WHERE Item_ID =:itemID");
+
+        $stmt->bindValue(':itemID', $itemID);
+
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $results['ItemName'];
+    }
     function getUserByID($userID)
     {
         global $db;
         $stmt = $db->prepare("SELECT * FROM rusers WHERE User_ID =:userID");
 
         $stmt->bindValue(':userID', $userID);
+
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $results;
+    }
+    function getRestautantByID($restaurantID)
+    {
+        global $db;
+        $stmt = $db->prepare("SELECT * FROM restaurant WHERE Restaurant_ID =:resID");
+
+        $stmt->bindValue(':resID', $restaurantID);
+
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $results;
+    }
+    function getItemByID($itemID)
+    {
+        global $db;
+        $stmt = $db->prepare("SELECT * FROM menuitem WHERE Item_ID =:itemID");
+
+        $stmt->bindValue(':itemID', $itemID);
 
         $stmt->execute();
         $results = $stmt->fetch(PDO::FETCH_ASSOC);
