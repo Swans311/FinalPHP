@@ -93,7 +93,7 @@
     {
         global $db;
         $results = 'Data NOT Added';
-        $stmt = $db->prepare("INSERT INTO review SET Restaurant_ID = :restaurantID, User_ID = :userID, Item_ID = :itemID, Review = :review, Star_lvl = :rating, Username = :username, Uname_Visible = :visible, Review_Date = :date, ResReview_ID = :resRevID");
+        $stmt = $db->prepare("INSERT INTO review SET Restaurant_ID = :restaurantID, User_ID = :userID, Item_ID = :itemID, Review = :review, Star_lvl = :rating, Username = :username, Uname_Visible = :visible, ReviewDate = :date, ResReview_ID = :resRevID");
 
         $stmt->bindValue(':restaurantID', $restaurantID);
         $stmt->bindValue(':userID', $userID);
@@ -622,5 +622,33 @@
         arsort($countArray);
 
         //Slices the first $numCategories values and returns an array with the categories
-        return array_keys(array_slice($countArray, 0, count($countArray) ? $numCategories : count($countArray)));
+        return array_keys(array_slice($countArray, 0, $numCategories <= count($countArray) ? $numCategories : count($countArray)));
+    }
+    //Code for datetime sorting taken from here https://stackoverflow.com/questions/2910611/php-sort-a-multidimensional-array-by-element-containing-date/2910642
+    function dateCompare($listA,$listB)
+    {
+        return strtotime($listA['ReviewDate']) - strtotime($listB['ReviewDate']);
+    }
+    function sortResultsByDateTime($arrays)
+    {
+        usort($arrays, "dateCompare");
+        return $arrays;
+    }
+    function getMostRecentReviewsByUser($userID, $numReviews)
+    {
+        $resReviews = getAllResReviewsByUser($userID);
+        $resReviews = sortResultsByDateTime($resReviews);
+        return array_slice($resReviews, 0,  $numReviews <= count($resReviews)? $numReviews : count($resReviews));   
+    }
+    function getMostRecentReviewsByRestaurant($restaurantID, $numReviews)
+    {
+        $resReviews = getAllReviewsForRestaurant($restaurantID);
+        $resReviews = sortResultsByDateTime($resReviews);
+        return array_slice($resReviews, 0,  $numReviews <= count($resReviews)? $numReviews : count($resReviews));   
+    }
+    function getMostRecentReviewsByItem($itemID, $numReviews)
+    {
+        $itemReviews = getAllReviewsForItem($itemID);
+        $itemReviews = sortResultsByDateTime($itemReviews);
+        return array_slice($itemReviews, 0,  $numReviews <= count($itemReviews)? $numReviews : count($itemReviews));   
     }
