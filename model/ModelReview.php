@@ -73,9 +73,21 @@
         $stmt->bindValue(':userID', $userID);
 
         $stmt->execute();
-        $results = $stmt->fetch(PDO::FETCH_ASSOC);
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return $results['Username'];
+    }
+    function getRestautantName($restaurantID)
+    {
+        global $db;
+        $stmt = $db->prepare("SELECT Restaurant_Name FROM restaurant WHERE restaurant_ID =:resID");
+
+        $stmt->bindValue(':resID', $restaurantID);
+
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $results['Restaurant_Name'];
     }
     function getUserByID($userID)
     {
@@ -153,24 +165,28 @@
        $binds = array();
        $sql = "SELECT * FROM restaurant WHERE 0=0 ";
        if ($name != "") {
-            $sql .= " AND Restaurant_Name LIKE :name";
+            $sql .= " AND UPPER(Restaurant_Name) LIKE UPPER(:name)";
             $binds['name'] = '%'.$name.'%';
        }
-       
        $sql .= " ORDER BY Restaurant_Name DESC";
-
        $stmt = $db->prepare($sql);
       
         $results = array();
         if ($stmt->execute($binds) && $stmt->rowCount() > 0) {
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
-
         $returnArray = [];
+        $categories = explode(',', $category);
         foreach($results as $result)
-            if(in_array($category, getCommonRestaurantCategories($result['Restaurant_ID'], 5)) || $category == '')
-                if(calculateRestaurantStarRating($result['Restaurant_ID']) >= $minRating)
-                    array_push($returnArray, $result);
+        {
+            $commonResCats = getCommonRestaurantCategories($result['Restaurant_ID'], 5);
+            foreach($commonResCats as $commonResCat)
+                foreach($categories as $cat)
+                    if($category == '' || strpos(strtoupper($commonResCat), strtoupper($cat)) !== false)
+                        if(calculateRestaurantStarRating($result['Restaurant_ID']) >= $minRating)
+                            if(!in_array($result, $returnArray))
+                                array_push($returnArray, $result);
+        }
 
         return ($returnArray);
     }
@@ -182,7 +198,7 @@
        $binds = array();
        $sql = "SELECT * FROM menuitem WHERE 0=0 ";
        if ($name != "") {
-            $sql .= " AND ItemName LIKE :name";
+            $sql .= " AND UPPER(ItemName) LIKE UPPER(:name)";
             $binds['name'] = '%'.$name.'%';
        }
        
@@ -195,10 +211,17 @@
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
         $returnArray = [];
+        $categories = explode(',', $category);
         foreach($results as $result)
-            if(in_array($category, getCommonItemCategories($result['Item_ID'], 5)) || $category == '')
-                if(calculateItemStarRating($result['Item_ID']) >= $minRating)
-                    array_push($returnArray, $result);
+        {
+            $commonItemCats = getCommonItemCategories($result['Item_ID'], 5);
+            foreach($commonItemCats as $commonItemCat)
+                foreach($categories as $cat)
+                    if($category == '' || strpos(strtoupper($commonItemCat), strtoupper($cat)) !== false)
+                        if(calculateItemStarRating($result['Item_ID']) >= $minRating)
+                            if(!in_array($result, $returnArray))
+                                array_push($returnArray, $result);
+        }
 
         return ($returnArray);
     }
