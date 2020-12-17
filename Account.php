@@ -13,7 +13,7 @@
         <div class="container gz-div-inner mx-auto text-left py-5 text-white" style="font-family: textFont;">
             <div class="container mr-auto mb-5">
                 <h1 class="display-4"style="font-family: titleFont;">Username</h1>
-                <h1 class="display-4">First Name</h1>
+                <h1 class="display-5">First Name</h1>
                 <h1 class="display-5">Last Name</h1>
                 <h1 class="display-5">Number of Reviews</h1>
                 <h1 class="display-5">Average Star Reviews</h1>
