@@ -32,6 +32,10 @@
     {
         document.getElementById("hidden").value++;
     }
+    function removeFoodReviewArea()
+    {
+        document.getElementById("hidden").value--;
+    }
     function regenerateFoodReviewAreas()
     {
         var div = document.getElementById("inputs");
@@ -81,21 +85,20 @@
                 + `<div class="col">`
                     + `<div class="form-group mt-4">`
                         + `<input size="25"type="text" name="food`+x+`" id="food`+x+`" placeholder="Food" />`
-                        + `</div>`
-                        + `<div class="form-group">`
+                    + `</div>`
+                    + `<div class="form-group">`
                         + `<input size="25"type="text" name="foodCategories`+x+`" id="foodCategories`+x+`" placeholder="Categories" />`
-                        + `</div>`
-                        + `<div class="form-group">`
+                    + `</div>`
+                    + `<div class="form-group">`
                         + `<label for="foodRating`+x+`">Star Rating:</label>`
                         + `<input type="number" name="foodRating`+x+`" id="foodRating`+x+`" min="0" max="5" step="0.1" />`
-                        + `</div>`
-                        + `</div>`
-                    + `<div class="col form-group">`
+                    + `</div>`
+                + `</div>`
+                + `<div class="col form-group">`
                     + `<div class="d-flex justify-content-end mb-2">`
                     + `<h2 class="text-white mr-auto" style="font-family: textFont">Review</h2>`
-                        + `<button id="removeFoodButton`+x+`" class="btn btn-outline-danger text-white border-white"type="submit">Remove Food Item</button>`
-                    + `</div>`
-                    + `<textarea class="form-control" name="foodReview1" rows="4"></textarea>`
+                + `</div>`
+                + `<textarea class="form-control" name="foodReview1" rows="4"></textarea>`
                 + `</div></div></div>`;
         }
     }
@@ -176,6 +179,7 @@
                 <div class="form-group m-3 d-flex justify-content-end">
                     <input name="hidden" id="hidden" type="number" min="1" step="1" value="<?= isset($_POST['hidden'])? $_POST['hidden']: '1'?>" hidden>
                     <button id="addFoodButton" class="btn btn-outline-success mx-3 text-white border-white"type="submit" onclick = addFoodReviewArea()>Add Food Item</button>
+                    <button id="removeFoodButton" class="btn btn-outline-danger text-white border-white"type="submit" onclick = removeFoodReviewArea()>Remove Food Item</button>
                     <button id="submitButton" class="btn btn-outline-light mx-3" type="submit">Submit</button>
                 </div>
             </form>
