@@ -21,16 +21,16 @@
         
         return ($results);
     }
-    function checkLogin($userEmail, $hashedPass)
+    function checkLogin($username, $hashedPass)
     {
         global $db;
-        $stmt = $db->prepare("SELECT * FROM rusers WHERE User_Email =:user_email AND User_Password = :pass");
+        $stmt = $db->prepare("SELECT User_ID FROM rusers WHERE Username =:username AND User_Password = :pass");
 
-        $stmt->bindValue(':user_email', $userEmail);
+        $stmt->bindValue(':userName', $username);
         $stmt->bindValue(':pass', $hashedPass);
-
+        
         $stmt->execute ();
-
+    
         return( $stmt->rowCount() > 0);
     }
     function delUser($userID)
@@ -438,6 +438,24 @@
             array_push($resReviewList, getRestaurantReview($reviewID));
         }
         return $resReviewList;
+    }
+    //Used when submitting review, returns restaurant id if found, false if not so it knows to add the restaurant
+    function searchOneRestaurantID($name, $address, $phone, $url)
+    {
+        global $db;
+        //get connected ItemReviews
+        $stmt = $db->prepare("SELECT Top 1 Restaurant_ID FROM restaurantreview WHERE Restaurant_Name = :resName AND ResAddress = :resAddress AND Phone = :phone AND Restaurant_URL = :resURL;");
+        $stmt->bindValue(':resName', $name);
+        $stmt->bindValue(':resAddress', $address);
+        $stmt->bindValue(':phone', $phone);
+        $stmt->bindValue(':resURL', $url);
+
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($stmt->rowCount() == 1)
+            return $results['Restaurant_ID'];
+        else
+            return false;
     }
     function searchUser($username, $email, $first, $last)
     {
