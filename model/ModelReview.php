@@ -21,16 +21,16 @@
         
         return ($results);
     }
-    function checkLogin($username, $hashedPass)
+    function checkLogin($userEmail, $hashedPass)
     {
         global $db;
-        $stmt = $db->prepare("SELECT User_ID FROM rusers WHERE Username =:username AND User_Password = :pass");
+        $stmt = $db->prepare("SELECT * FROM rusers WHERE User_Email =:user_email AND User_Password = :pass");
 
-        $stmt->bindValue(':userName', $username);
+        $stmt->bindValue(':user_email', $userEmail);
         $stmt->bindValue(':pass', $hashedPass);
-        
+
         $stmt->execute ();
-    
+
         return( $stmt->rowCount() > 0);
     }
     function delUser($userID)
