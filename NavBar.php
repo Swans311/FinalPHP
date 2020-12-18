@@ -1,14 +1,11 @@
 <?php 
 
-session_start();
-/* Added this logic to show that we need something to switch the nav bar between logged in and out*/ 
 
-if($_SESSION['loggedin']!=true)
-{
+if (!isset($_SESSION['loggedin'])) {
+  session_start();
   $loggedin=false;
-}
-else{
-  $loggedin = $_SESSION['loggedin'];
+} else {
+  $loggedin=$_SESSION['loggedin'];
 }
 
 
@@ -54,7 +51,7 @@ else{
           </li>
         <?php else:?>
           <li class="nav-item">
-            <a class="nav-link gz-nav-link" href="Login.php">Log Out</a>
+            <a class="nav-link gz-nav-link" href="Logout.php"  >Log Out</a>
           </li>
           <li class="nav-item">
             <a class="nav-link gz-nav-link" href="account.php"><img src="misc/img/user.svg" alt="Profile Icon" style="height: 24px; weight:24px;">  Account</a>
@@ -65,3 +62,5 @@ else{
   </nav>
 </body>
 </html>
+
+

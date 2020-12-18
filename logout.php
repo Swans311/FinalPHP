@@ -2,6 +2,7 @@
     include (__DIR__.'/NavBar.php');
     include (__DIR__. '/Model/ModelReview.php');
 
+    
     $_SESSION['loggedin']=false;
     session_destroy();
     session_start();
