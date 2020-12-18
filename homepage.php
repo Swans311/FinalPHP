@@ -35,7 +35,7 @@
             <div class="py-3">
                 <h1 class="glow text-white display-4" style="font-family: logoFont;">Gourmandize</h1>
                 <hr/>
-                <p>Gourmandize was created by three friends who all have a passion for eating. They always thought that something was missing when they went to look for food and only saw reviews for the restaurant as a whole. One day while Casey Viens (Chairman) ordered subpar French Fries, he knew that this would be the straw the broke the camel's back. A mere few weeks later is when he got together with his two vice-chairs, Joe and Dave they came up with Gourmandize&trade; to never have this kind of experience again. </p>
+                <p>Gourmandize was created by three friends who all have a passion for eating. They always thought that something was missing when they went to look for food and only saw reviews for the restaurant as a whole. One day while Joseph Sherry (Chairman) ordered subpar French Fries, he knew that this would be the straw the broke the camel's back. A mere few weeks later is when he got together with his two vice-chairs, David Swansey and Casey Viens they came up with Gourmandize&trade; to never have this kind of experience again. </p>
                 <h4 class="text-center">Local Cuisine</h4>
                 <hr/>
                 <form action="homepage.php" method="POST" style="width:50%;margin:auto;">
