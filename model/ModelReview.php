@@ -556,7 +556,31 @@
         
         return ($results);
     }
+    function getUserID($useremail)
+    {
+        global $db;
+        $stmt = $db->prepare("SELECT User_ID FROM rusers WHERE User_Email =:useremail");
 
+        $stmt->bindValue(':useremail', $useremail, PDO::PARAM_STR);
+
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $results['User_ID'];
+    }
+
+    function getReview($ReviewID)
+    {
+        global $db;
+        $stmt = $db->prepare("SELECT * FROM review WHERE Review_ID =:ID");
+
+        $stmt->bindValue(':ID', $ReviewID);
+
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $results;
+    }
 
     /*
 
