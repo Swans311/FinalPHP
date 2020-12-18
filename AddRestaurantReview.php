@@ -7,9 +7,9 @@
         $item = getItemByID($_GET['itemID']);
         $restaurant = getRestaurantByID($item['Restaurant_ID']);
     }
-    if(isset($_GET['restaurantID']))
+    if(isset($_GET['RestaurantID']))
     {
-        $restaurant = getRestaurantByID($_GET['restaurantID']);
+        $restaurant = getRestaurantByID($_GET['RestaurantID']);
     }
     
     $numFoodReviews = isset($_POST['hidden']) ? $_POST['hidden'] : 1;
