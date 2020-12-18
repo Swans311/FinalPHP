@@ -2,7 +2,7 @@
     include(__DIR__.'/NavBar.php');
     include(__DIR__.'/model/ModelReview.php');
     
-    $restaurantInfo = getRestautantByID($_GET['id']);
+    $restaurantInfo = getRestaurantByID($_GET['id']);
     $restaurantReviews = getMostRecentReviewsByRestaurant($_GET['id'], 3);
 ?>
 <!DOCTYPE html>

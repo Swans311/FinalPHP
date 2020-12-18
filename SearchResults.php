@@ -113,7 +113,7 @@
                                     echo '<div class="row">';
                                         echo '<div class="col">';
                                             echo '<h3>'.$searchResult['ItemName'].'</h3>';
-                                            echo '<h3>'.getRestautantName($searchResult['Restaurant_ID']).'</h3>';
+                                            echo '<h3>'.getRestaurantName($searchResult['Restaurant_ID']).'</h3>';
                                             echo '<h3>'.round(calculateItemStarRating($searchResult['Item_ID']),2 ).' Stars</h3>';
                                             echo '<h5>'.implode(', ', getCommonItemCategories($searchResult['Item_ID'], 3)).'</h5>';
                                         echo '</div>';

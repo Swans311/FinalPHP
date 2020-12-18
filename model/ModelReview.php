@@ -77,7 +77,7 @@
 
         return $results['Username'];
     }
-    function getRestautantName($restaurantID)
+    function getRestaurantName($restaurantID)
     {
         global $db;
         $stmt = $db->prepare("SELECT Restaurant_Name FROM restaurant WHERE Restaurant_ID =:resID");
@@ -113,7 +113,7 @@
 
         return $results;
     }
-    function getRestautantByID($restaurantID)
+    function getRestaurantByID($restaurantID)
     {
         global $db;
         $stmt = $db->prepare("SELECT * FROM restaurant WHERE Restaurant_ID =:resID");
@@ -710,4 +710,7 @@
         $itemReviews = getAllReviewsForItem($itemID);
         $itemReviews = sortResultsByDateTime($itemReviews);
         return array_slice($itemReviews, 0,  $numReviews <= count($itemReviews)? $numReviews : count($itemReviews));   
+    }
+    function isPostRequest(){
+        return (filter_input(INPUT_SERVER, 'REQUEST_METHOD')=== 'POST');
     }
