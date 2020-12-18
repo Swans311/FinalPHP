@@ -47,7 +47,7 @@
         }
 
         if($Error==''){
-            addUser($UName, $Email, $pw, $FName, $LName);                
+            addUser($UName, $Email, $pw, $FName, $LName, "");                
             header('Location: Login.php');    
         }
         else{
