@@ -17,8 +17,20 @@
                 $searchResults = searchByRestaurant($_POST['name'], $_POST['categories'], $minStars);
             }
         }
+        
         // /var_dump($searchResults);
     }
+
+    if(isset($_GET['categories'])){
+        $CATTY=filter_input(INPUT_GET,'categories');
+        $CATTY = $_GET['categories'];
+        $TYPEY=filter_input(INPUT_GET,'type');
+        $TYPEY=$_GET['type'];
+    } else {
+        $CATTY = '';
+    }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,13 +59,13 @@
                     </div>
                     <div class="form-group m-3" style="float:left;">
                         <h2 class="text-white display-5" style="font-family: textFont">Categories</h2>
-                        <input size="30"type="text" name="categories"/>
+                        <input size="30"type="text" name="categories" value=<?=$CATTY;?> />
                     </div>
                     <div class="form-group m-3" style="float:left;">
                         <h2 class="text-white display-5" style="font-family: textFont">Type</h2>
                         <input type="radio" id="restaurantRadio" name="type" value="restaurant"/>
                         <label for="restaurantRadio" >Restaurant</label>
-                        <input type="radio" id="foodRadio" name="type" value="food"/>
+                        <input type="radio" id="foodRadio" name="type" value="food" checked="<? if ($_GET['type'] == 'food'){ echo true; } ?>/>
                         <label for="foodRadio">Food</label>
                     </div>
                     <div style="clear: both;">

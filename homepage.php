@@ -1,6 +1,19 @@
 <?php
     include (__DIR__.'/NavBar.php');
     include (__DIR__. '/Model/ModelReview.php');
+
+    $Cat2 = getMostCommonCategoriesAllItems(6);
+
+    
+
+
+
+
+
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -25,16 +38,18 @@
                 <p>Gourmandize was created by three friends who all have a passion for eating. They always thought that something was missing when they went to look for food and only saw reviews for the restaurant as a whole. One day while Casey Viens (Chairman) ordered subpar French Fries, he knew that this would be the straw the broke the camel's back. A mere few weeks later is when he got together with his two vice-chairs, Joe and Dave they came up with Gourmandize&trade; to never have this kind of experience again. </p>
                 <h4 class="text-center">Local Cuisine</h4>
                 <hr/>
-                <form action="homepage.php" method="get" style="width:50%;margin:auto;">
+                <form action="homepage.php" method="POST" style="width:50%;margin:auto;">
                     <table class="table-borderless">
                         <?php 
-                            $Cat = getMostCommonCategoriesAllItems(5);
+                            $Cat = getMostCommonCategoriesAllItems(6);
                             $rowCount = 0;
+                            $i=0;
                             foreach($Cat as $cc):
                                 if($rowCount == 0)
                                     echo '<tr>';
                                 $rowCount ++;
-                                    echo '<td><input type="button" class="btn btn-outline-light" value="Find ' . $cc . ' Nearby"></td>';
+                                $i++;
+                                    echo '<td "style="padding:10px; width:30%;" class="col-md-4"><a href="SearchResults.php?type=food&categories='.$cc.'" class="btn btn-outline-light">Find ' . $cc . ' Nearby </a></td>';
                                 if($rowCount == 3)
                                 {
                                     echo "</tr>";
