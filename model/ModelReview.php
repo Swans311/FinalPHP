@@ -21,12 +21,12 @@
         
         return ($results);
     }
-    function checkLogin($username, $hashedPass)
+    function checkLogin($email, $hashedPass)
     {
         global $db;
-        $stmt = $db->prepare("SELECT User_ID FROM rusers WHERE Username =:username AND User_Password = :pass");
+        $stmt = $db->prepare("SELECT User_ID FROM rusers WHERE User_Email =:email AND User_Password = :pass");
 
-        $stmt->bindValue(':userName', $username);
+        $stmt->bindValue(':email', $email);
         $stmt->bindValue(':pass', $hashedPass);
         
         $stmt->execute ();
