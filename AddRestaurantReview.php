@@ -18,6 +18,103 @@
         $_SESSION['numFoodReviews'] = 1;
     else
         $_SESSION['numFoodReviews'] = $numFoodReviews;
+
+    //Submit the info and try to add the review
+    if(isset($_POST['submit']))
+    {
+        $lastchars = [];
+        foreach($_POST as $value)
+        {
+            //filter out empty values
+            if($value != '')
+            {
+                //Take last char of all post values
+                $lastchar = substr($value, -1);
+                //Only ones ending in a number
+                if(is_numeric($lastchar))
+                    array_push($lastchars, $lastchar);
+            }
+        }
+        $numReviewAreas = max($lastchars);
+        $flag = true;
+        $twodimArray = [];
+        if(isset($_POST['restaurantName']) && isset($_POST['restaurantAddress']) && isset($_POST['restaurantPhone']) && isset($_POST['restaurantURL']))
+        {
+            $resID = searchOneRestaurantID($_POST['restaurantName'], $_POST['restaurantAddress'], $_POST['restaurantPhone'], $_POST['restaurantURL']);
+            if($resID == false)//if restaurantID wasnt found add restaurant
+            {
+                addRestaurant($_POST['restaurantName'], $_POST['restaurantAddress'], $_POST['restaurantPhone'], $_POST['restaurantURL']);
+                //Should be gaurunteed to exist now
+                $resID = searchOneRestaurantID($_POST['restaurantName'], $_POST['restaurantAddress'], $_POST['restaurantPhone'], $_POST['restaurantURL']);
+            }
+            //put together restaurantreview except 2d array portion
+            $resReviewParams = array();
+            $resReviewParams['resID'] = $resID;
+            //waiting on dave to push his code for this to work
+            $uID = getUserID($_SESSION['email']);
+            $resReviewParams['UserID'] = $uID;
+            if(isset($_POST['restaurantReview']) && $_POST['restaurantReview'] != "")
+                $resReviewParams['resReview'] = $_POST['restaurantReview'];
+            else     
+                $flag = false;
+            if(isset($_POST['restaurantRating']) && $_POST['restaurantRating'] != "")
+                $resReviewParams['resRating'] = $_POST['restaurantRating'];
+            else     
+                $flag = false;
+            if(isset($_POST['reviewAnonymous']))
+                $resReviewParams['resVisible'] = false;
+            else     
+                $resReviewParams['resVisible'] = true;
+            
+            //TODO:: code for sending image location too
+
+            //if all those vars were present continue
+            if($flag) 
+            {
+                for($i = 1; $i <= $numReviewAreas; $i++)
+                {
+                    $singleItemArray = array();
+
+                    if(isset($_POST['food' . $i]) && $_POST['food' . $i] != "")
+                    {
+                        $itemID = searchOneItemId($resID, $_POST['food' . $i]);
+                        if($itemID == false)//if restaurantID wasnt found add restaurant
+                        {
+                            addItem($resID, $_POST['food' . $i]);
+                            //Should be gaurunteed to exist now
+                            $resID = searchOneItemID($resID, $_POST['food' . $i]);
+                        }
+                        $singleItemArray['itemID'] = $_POST['food' . $i];
+                    }
+                    else     
+                        $flag = false;
+
+                    if(isset($_POST['foodCategories'.$i]) && $_POST['foodCategories'.$i] != "")
+                    {
+                        $singleItemArray['category'] = $_POST['foodCategories'.$i];
+                    }
+                    else     
+                        $flag = false;
+                        
+                    if(isset($_POST['foodRating'.$i]) && $_POST['foodRating'.$i] != "")
+                        $singleItemArray['rating'] = $_POST['foodRating'.$i];
+                    else     
+                        $flag = false;
+                                                
+                    if(isset($_POST['foodReview'.$i]) && $_POST['foodReview'.$i] != "")
+                        $singleItemArray['review'] = $_POST['foodReview'.$i];
+                    else     
+                        $flag = false;
+                    //TODO:: Code for sending image location
+                    array_push($twodimArray, $singleItemArray);
+                }
+                if($flag)
+                    addRestaurantReview($resID, $uID, $resReviewParams['resReview'],  $resReviewParams['resRating'], $resReviewParams['resVisible'], "", $twodimArray);
+            } 
+            //add item reviews to array
+
+        }
+    }
     
 ?>
 <!DOCTYPE html>
@@ -39,7 +136,9 @@
     function regenerateFoodReviewAreas()
     {
         var div = document.getElementById("inputs");
-        /*
+        /* GAVE UP ON MAKING THIS CODE WORK TO KEEP IT STICKY 
+        THIS IS THE 4TH ATTEMPTED METHOD AND EVEN IF IT COULD
+        WORK THIS IS INSANELY SLOW
         div.innerHTML += <?php /*
             for($i = 2; $i < $_SESSION['numFoodReviews']; $i++)
             {
@@ -177,10 +276,10 @@
                     </div>
                 </div>
                 <div class="form-group m-3 d-flex justify-content-end">
-                    <input name="hidden" id="hidden" type="number" min="1" step="1" value="<?= isset($_POST['hidden'])? $_POST['hidden']: '1'?>" hidden>
+                    <input name="hidden" id="hidden" type="number" min="1" step="1" value="<?= isset($_POST['hidden']) && $_POST['hidden'] >= 1 ? $_POST['hidden']: '1'?>" hidden>
                     <button id="addFoodButton" class="btn btn-outline-success mx-3 text-white border-white"type="submit" onclick = addFoodReviewArea()>Add Food Item</button>
                     <button id="removeFoodButton" class="btn btn-outline-danger text-white border-white"type="submit" onclick = removeFoodReviewArea()>Remove Food Item</button>
-                    <button id="submitButton" class="btn btn-outline-light mx-3" type="submit">Submit</button>
+                    <button id="submitButton" class="btn btn-outline-light mx-3" name="submit" type="submit">Submit</button>
                 </div>
             </form>
         </div>

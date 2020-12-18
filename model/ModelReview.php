@@ -137,11 +137,11 @@
 
         return $results;
     }
-    function addItemReview($restaurantID, $userID, $itemID, $resReviewID, $dateTime, $rating, $review, $anonymous, $imageFilePath)
+    function addItemReview($restaurantID, $userID, $itemID, $resReviewID, $dateTime, $categories, $rating, $review, $anonymous, $imageFilePath)
     {
         global $db;
         $results = 'Data NOT Added';
-        $stmt = $db->prepare("INSERT INTO review SET Restaurant_ID = :restaurantID, User_ID = :userID, Item_ID = :itemID, Review = :review, Star_lvl = :rating, Username = :username, Uname_Visible = :visible, ReviewDate = :date, ResReview_ID = :resRevID");
+        $stmt = $db->prepare("INSERT INTO review SET Restaurant_ID = :restaurantID, User_ID = :userID, Item_ID = :itemID, Review = :review, Star_lvl = :rating, Username = :username, Uname_Visible = :visible, ReviewDate = :date, Category = :cat, ResReview_ID = :resRevID");
 
         $stmt->bindValue(':restaurantID', $restaurantID);
         $stmt->bindValue(':userID', $userID);
@@ -151,6 +151,7 @@
         $stmt->bindValue(':username', getUsername($userID));
         $stmt->bindValue(':visible', !$anonymous);
         $stmt->bindValue(':date', $dateTime);
+        $stmt->bindValue(':cat', $categories);
         $stmt->bindValue(':resRevID', $resReviewID);
 
         $stmt->execute ();
@@ -190,7 +191,7 @@
         //loop throught list and call addItemReview()
         foreach($itemReview2DList as $itemReviewList)
         {
-            addItemReview($restaurantID, $userID, $itemReviewList['itemID'], $resRevID, $time, $itemReviewList['rating'], $itemReviewList['review'], $anonymous, ''/*$itemReviewList['imageFilePath']*/);
+            addItemReview($restaurantID, $userID, $itemReviewList['itemID'], $resRevID, $time, $itemReviewList['category'], $itemReviewList['rating'], $itemReviewList['review'], $anonymous, ''/*$itemReviewList['imageFilePath']*/);
         }
     }
     //use minRating = -1 to ignore rating and 0 to get all restaurants that have been reviewed at least once
