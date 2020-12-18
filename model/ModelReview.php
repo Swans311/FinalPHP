@@ -5,20 +5,29 @@
     {
         global $db;
         $results = 'Data NOT Added';
-        $stmt = $db->prepare("INSERT INTO rusers SET Username = :username, User_Password = :hashedPass, User_Email = :email, FName = :fname, LName = :lname");
+        $stmt2 = $db->prepare("SELECT * FROM rusers WHERE Username = :username");
+        $stmt2-> bindValue(':username', $username);
+        $stmt3= $db->prepare("SELECT * FROM rusers WHERE User_Email = :email");
+        $stmt3->bindValue(":email", $email);
 
-        $stmt -> bindValue(':username', $username);
-        $stmt -> bindValue(':hashedpass', $hashedPass);
-        $stmt -> bindValue(':email', $email);
-        $stmt -> bindValue(':fname', $first);
-        $stmt -> bindValue(':lname', $last);
-        
-
-        if ($stmt->execute() && $stmt->rowCount() > 0) 
+        if ($stmt2->execute() && $stmt2->rowCount()==0 && $stmt3->execute() && $stmt3->rowCount()==0)
         {
-            $results = 'Data Added';
+            $stmt = $db->prepare("INSERT INTO rusers SET Username = :username, User_Password = :hashedPass, User_Email = :email, FName = :fname, LName = :lname");
+
+            $stmt -> bindValue(':username', $username);
+            $stmt -> bindValue(':hashedPass', $hashedPass);
+            $stmt -> bindValue(':email', $email);
+            $stmt -> bindValue(':fname', $first);
+            $stmt -> bindValue(':lname', $last);
+
+
+            if ($stmt->execute() && $stmt->rowCount() > 0) 
+            {
+                $results = 'Data Added';
+            }
         }
-        
+
+
         return ($results);
     }
     function checkLogin($email, $hashedPass)
