@@ -20,7 +20,7 @@
                 <div class="media-body">
                     <?php
                         echo '<h1 class="display-4"style="font-family: titleFont;">'.$itemInfo['ItemName'].'</h1>';
-                        echo '<h1 class="display-4"style="font-family: titleFont;">'.getRestautantName($itemInfo['Restaurant_ID']).'</h1>';
+                        echo '<h1 class="display-4"style="font-family: titleFont;">'.getRestaurantName($itemInfo['Restaurant_ID']).'</h1>';
                         echo '<h1 class="display-4">'.implode(', ', getCommonItemCategories($itemInfo['Item_ID'], 3)).'</h1>';
                         echo '<h1 class="display-4">'.round(calculateItemStarRating($itemInfo['Item_ID']),2 ).' Stars</h1>';
                     ?>

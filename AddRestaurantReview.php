@@ -11,8 +11,6 @@
     {
         $restaurant = getRestaurantByID($_GET['restaurantID']);
     }
-    if(isset($_POST))
-        var_dump($_POST);
     
     $numFoodReviews = isset($_POST['hidden']) ? $_POST['hidden'] : 1;
     session_start();
