@@ -457,6 +457,22 @@
         else
             return false;
     }
+    //Used when submitting review, returns item id if found, false if not so it knows to add the item
+    function searchOneItemID($resID, $name)
+    {
+        global $db;
+        //get connected ItemReviews
+        $stmt = $db->prepare("SELECT Top 1 Item_ID FROM menuitem WHERE ItemName = :itemName AND Restaurant_ID = :resID;");
+        $stmt->bindValue(':itemName', $name);
+        $stmt->bindValue(':resID', $resID);
+
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($stmt->rowCount() == 1)
+            return $results['Item_ID'];
+        else
+            return false;
+    }
     function searchUser($username, $email, $first, $last)
     {
         global $db;
@@ -580,6 +596,25 @@
         $results = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $results;
+    }
+    function getAllReviewsByUser($userID)
+    {
+        global $db;
+        //get connected ItemReviews
+        $stmt = $db->prepare("SELECT * FROM review WHERE User_ID = :ID;");
+        $stmt->bindValue(':ID', $userID);
+
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $ReviewList = array();
+        //loop through and append to list
+        foreach($results as $result)
+        {
+            $reviewID = $result['Review_ID'];
+            array_push($ReviewList, getReview($reviewID));
+        }
+        return $ReviewList;
     }
 
     /*
