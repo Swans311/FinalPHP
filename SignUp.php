@@ -2,8 +2,7 @@
     include (__DIR__.'/NavBar.php');
     include (__DIR__.'/model/ModelReview.php');
 
-    session_destroy();
-    session_start();
+
 
 
     $Error="";
