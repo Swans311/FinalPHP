@@ -150,7 +150,7 @@
     {
         global $db;
         $results = 'Data NOT Added';
-        $stmt = $db->prepare("INSERT INTO review SET Restaurant_ID = :restaurantID, User_ID = :userID, Item_ID = :itemID, Review = :review, Star_lvl = :rating, Username = :username, Uname_Visible = :visible, ReviewDate = :date, Category = :cat, ResReview_ID = :resRevID");
+        $stmt = $db->prepare("INSERT INTO review SET Restaurant_ID = :restaurantID, User_ID = :userID, Item_ID = :itemID, Review = :review, Star_lvl = :rating, Username = :username, Uname_Visible = :visible, ReviewDate = :revDate, Category = :cat, ResReview_ID = :resRevID");
 
         $stmt->bindValue(':restaurantID', $restaurantID);
         $stmt->bindValue(':userID', $userID);
@@ -158,13 +158,13 @@
         $stmt->bindValue(':review', $review);
         $stmt->bindValue(':rating', $rating);
         $stmt->bindValue(':username', getUsername($userID));
-        $stmt->bindValue(':visible', !$anonymous);
-        $stmt->bindValue(':date', $dateTime);
+        $stmt->bindValue(':visible', $anonymous);
+        $stmt->bindValue(':revDate', $dateTime);
         $stmt->bindValue(':cat', $categories);
         $stmt->bindValue(':resRevID', $resReviewID);
 
         $stmt->execute ();
-
+        var_dump($stmt->rowCount());
         return( $stmt->rowCount() > 0);
     }
     function addRestaurantReview($restaurantID, $userID, $restaurantReview, $rating,  $anonymous, $imageFilePath, $itemReview2DList, $categories)
@@ -177,17 +177,16 @@
         $stmt->bindValue(':review', $restaurantReview);
         $stmt->bindValue(':rating', $rating);
         $stmt->bindValue(':username', getUsername($userID));
-        $stmt->bindValue(':visible', $anonymous);
-        $stmt->bindValue(':category', $categories);
-
+        
         $time = date('Y-m-d H:i:s');
 
         $stmt->bindValue(':revDate', $time);
+        $stmt->bindValue(':visible', $anonymous);
+        $stmt->bindValue(':category', $categories);
 
-        $stmt->execute ();
+        $stmt->execute();
 
-        var_dump($time);
-        $success = $stmt->rowCount() > 0;
+        $success = $stmt->rowCount();
 
         //get resReviewID by searching table for match on restaurantID, userID, date
         $stmt = $db->prepare("SELECT ResReview_ID FROM restaurantreview WHERE Restaurant_ID = :resID AND User_ID = :userID AND ReviewDate = :revDate");
@@ -196,12 +195,13 @@
         $stmt->bindValue(':revDate', $time);
 
         $stmt->execute();
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $resRevID = $results[0]['ResReview_ID'];
+        $results = $stmt->fetch(PDO::FETCH_ASSOC);
+        $resRevID = $results['ResReview_ID'];
 
         //loop throught list and call addItemReview()
         foreach($itemReview2DList as $itemReviewList)
         {
+            var_dump($itemReviewList);
             addItemReview($restaurantID, $userID, $itemReviewList['itemID'], $resRevID, $time, $itemReviewList['category'], $itemReviewList['rating'], $itemReviewList['review'], $anonymous, ''/*$itemReviewList['imageFilePath']*/);
         }
     }

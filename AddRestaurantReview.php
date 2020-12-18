@@ -56,10 +56,13 @@
             $resReviewParams['resID'] = $resID;
             //waiting on dave to push his code for this to work
             $uID = getUserID($_SESSION['email']);
-            var_dump($uID);
             $resReviewParams['UserID'] = $uID;
             if(isset($_POST['restaurantReview']) && $_POST['restaurantReview'] != "")
                 $resReviewParams['resReview'] = $_POST['restaurantReview'];
+            else     
+                $flag = false;
+            if(isset($_POST['restaurantCategories']) && $_POST['restaurantCategories'] != "")
+                $resReviewParams['categories'] = $_POST['restaurantCategories'];
             else     
                 $flag = false;
             if(isset($_POST['restaurantRating']) && $_POST['restaurantRating'] != "")
@@ -87,9 +90,9 @@
                         {
                             addItem($resID, $_POST['food' . $i]);
                             //Should be gaurunteed to exist now
-                            $resID = searchOneItemID($resID, $_POST['food' . $i]);
+                            $itemID = searchOneItemID($resID, $_POST['food' . $i]);
                         }
-                        $singleItemArray['itemID'] = $_POST['food' . $i];
+                        $singleItemArray['itemID'] = $itemID;
                     }
                     else     
                         $flag = false;
@@ -114,7 +117,7 @@
                     array_push($twodimArray, $singleItemArray);
                 }
                 if($flag)
-                    addRestaurantReview($resID, $uID, $resReviewParams['resReview'],  $resReviewParams['resRating'], !$resReviewParams['resVisible'], "", $twodimArray, $categories);
+                    addRestaurantReview($resID, $uID, $resReviewParams['resReview'],  $resReviewParams['resRating'], !$resReviewParams['resVisible'], "", $twodimArray, $resReviewParams['categories']);
             } 
             //add item reviews to array
 
@@ -238,6 +241,9 @@
                                 </div>
                                 <div class="form-group">
                                     <input size="25"type="text" name="restaurantURL" placeholder="URL" value="<?=$restaurant['Restaurant_URL']?>"/>
+                                </div>
+                                <div class="form-group">
+                                    <input size="25"type="text" name="restaurantCategories" id="restaurantCategories" placeholder="Categories"  value="<?=isset($_POST['restaurantCategories'])? $_POST['restaurantCategories']: '' ?>"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="restaurantRating">Star Rating:</label>

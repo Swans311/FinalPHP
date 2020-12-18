@@ -65,7 +65,7 @@
                         <h2 class="text-white display-5" style="font-family: textFont">Type</h2>
                         <input type="radio" id="restaurantRadio" name="type" value="restaurant"/>
                         <label for="restaurantRadio" >Restaurant</label>
-                        <input type="radio" id="foodRadio" name="type" value="food" checked="<? if ($_GET['type'] == 'food'){ echo true; } ?>/>
+                        <input type="radio" id="foodRadio" name="type" value="food" <?= $_GET['type'] == 'food'? "checked" : "" ?>/>
                         <label for="foodRadio">Food</label>
                     </div>
                     <div style="clear: both;">
