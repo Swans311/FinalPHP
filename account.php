@@ -1,4 +1,5 @@
 <?php 
+    include (__DIR__.'/NavBar.php');
     include (__DIR__.'/model/ModelReview.php');
 
     $resID=array();
@@ -38,7 +39,6 @@
         endforeach;
     }
 
-    include (__DIR__.'/NavBar.php');
 
     /*
     { ["ResReview_ID"]=> int(4) ["Restaurant_ID"]=> int(1) ["User_ID"]=> int(1) ["Review"]=> string(212) "" 

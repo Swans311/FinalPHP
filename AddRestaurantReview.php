@@ -27,13 +27,13 @@
     if(isset($_POST['submit']))
     {
         $lastchars = [];
-        foreach($_POST as $value)
+        foreach($_POST as $key => $value)
         {
             //filter out empty values
             if($value != '')
             {
                 //Take last char of all post values
-                $lastchar = substr($value, -1);
+                $lastchar = substr($key, -1);
                 //Only ones ending in a number
                 if(is_numeric($lastchar))
                     array_push($lastchars, $lastchar);
@@ -41,7 +41,7 @@
         }
         $numReviewAreas = max($lastchars);
         $flag = true;
-        $twodimArray = [];
+        $twodimArray = array();
         if(isset($_POST['restaurantName']) && isset($_POST['restaurantAddress']) && isset($_POST['restaurantPhone']) && isset($_POST['restaurantURL']))
         {
             $resID = searchOneRestaurantID($_POST['restaurantName'], $_POST['restaurantAddress'], $_POST['restaurantPhone'], $_POST['restaurantURL']);
@@ -56,6 +56,7 @@
             $resReviewParams['resID'] = $resID;
             //waiting on dave to push his code for this to work
             $uID = getUserID($_SESSION['email']);
+            var_dump($uID);
             $resReviewParams['UserID'] = $uID;
             if(isset($_POST['restaurantReview']) && $_POST['restaurantReview'] != "")
                 $resReviewParams['resReview'] = $_POST['restaurantReview'];
@@ -113,7 +114,7 @@
                     array_push($twodimArray, $singleItemArray);
                 }
                 if($flag)
-                    addRestaurantReview($resID, $uID, $resReviewParams['resReview'],  $resReviewParams['resRating'], $resReviewParams['resVisible'], "", $twodimArray);
+                    addRestaurantReview($resID, $uID, $resReviewParams['resReview'],  $resReviewParams['resRating'], !$resReviewParams['resVisible'], "", $twodimArray, $categories);
             } 
             //add item reviews to array
 
