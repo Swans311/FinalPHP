@@ -28,6 +28,7 @@
         $TYPEY=$_GET['type'];
     } else {
         $CATTY = '';
+        $_GET['type']='';
     }
 
 
