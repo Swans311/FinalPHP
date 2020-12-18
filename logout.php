@@ -2,13 +2,11 @@
     include (__DIR__.'/NavBar.php');
     include (__DIR__. '/Model/ModelReview.php');
 
-    
-    $_SESSION['loggedin']=false;
     session_destroy();
     session_start();
     $_SESSION['loggedin']=false;
     
-    if (isPostRequest()){
+    /*if (isPostRequest()){
         $_SESSION['email']=filter_input(INPUT_POST,'email');
         $_SESSION['upassword']=filter_input(INPUT_POST, 'upassword');
 
@@ -23,7 +21,8 @@
         }
         else{
         }
-    }
+    }*/
+    header("Location: homepage.php");
 
 
 ?>

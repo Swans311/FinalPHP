@@ -1,8 +1,6 @@
 <?php 
     include (__DIR__.'/model/ModelReview.php');
 
-
-    session_start();
     $resID=array();
     $resName=array();
     $stars=array();
