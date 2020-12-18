@@ -13,11 +13,15 @@
     }
     
     $numFoodReviews = isset($_POST['hidden']) ? $_POST['hidden'] : 1;
-    session_start();
     if(!isset($_POST))
         $_SESSION['numFoodReviews'] = 1;
     else
         $_SESSION['numFoodReviews'] = $numFoodReviews;
+    if (!isset($_SESSION['loggedin']) || !$_SESSION['loggedin']) 
+    {
+        header('Location: Login.php');
+        exit;
+    }
 
     //Submit the info and try to add the review
     if(isset($_POST['submit']))

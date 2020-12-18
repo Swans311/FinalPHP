@@ -59,7 +59,7 @@
                     </div>
                     <div class="form-group m-3" style="float:left;">
                         <h2 class="text-white display-5" style="font-family: textFont">Categories</h2>
-                        <input size="30"type="text" name="categories" value=<?=$CATTY;?> />
+                        <input size="30"type="text" name="categories" value="<?=$CATTY;?>" />
                     </div>
                     <div class="form-group m-3" style="float:left;">
                         <h2 class="text-white display-5" style="font-family: textFont">Type</h2>
@@ -97,7 +97,7 @@
                                             echo '</div>';
                                             echo '<div class="col d-flex align-content-center flex-wrap">';
                                                 echo '<button class="btn btn-outline-light m-3" onclick="window.location.href=`ViewRestaurant.php?id='.$searchResult['Restaurant_ID'].'`">View Reviews</button>';
-                                                echo '<button class="btn btn-outline-light m-3" >Add Review</button>';
+                                                echo '<button class="btn btn-outline-light m-3" onclick="window.location.href=`AddRestaurantReview.php?RestaurantID='.$searchResult['Restaurant_ID'].'`">Add Review</button>';
                                             echo '</div></div></div></div></div>';
 
                         }
@@ -118,8 +118,8 @@
                                             echo '<h5>'.implode(', ', getCommonItemCategories($searchResult['Item_ID'], 3)).'</h5>';
                                         echo '</div>';
                                         echo '<div class="col d-flex align-content-center flex-wrap">';
-                                            echo '<button class="btn btn-outline-light m-3" onclick="window.location.href=`ViewItem.php?id='.$searchResult['Restaurant_ID'].'`">View Reviews</button>';
-                                            echo '<button class="btn btn-outline-light m-3">Add Review</button>';
+                                            echo '<button class="btn btn-outline-light m-3" onclick="window.location.href=`ViewItem.php?id='.$searchResult['Item_ID'].'`">View Reviews</button>';
+                                            echo '<button class="btn btn-outline-light m-3" onclick="window.location.href=`AddRestaurantReview.php?itemID='.$searchResult['Item_ID'].'`">Add Review</button>';
                                         echo '</div></div></div></div></div>';
                         }
                     }
