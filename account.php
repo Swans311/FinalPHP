@@ -76,7 +76,7 @@
                     <div class="media-body">
                         <div>
                             <!-- Adjust data-->
-                            <h3>Restaurant's Name: <?=$resName[$r]?></h3>
+                            <h3>Restaurant's Name: <?=$resName[$loopcount]?></h3>
                             <h3>Stars: <?=$reviewarray['Star_lvl'];?></h3>
                             <p style="min-height: 110px">Full text review:</p>
                             <p><?="Review Here";?></p>
