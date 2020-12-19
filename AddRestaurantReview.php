@@ -243,7 +243,7 @@
                                     <input size="25"type="text" name="restaurantURL" placeholder="URL" value="<?=$restaurant['Restaurant_URL']?>"/>
                                 </div>
                                 <div class="form-group">
-                                    <input size="25"type="text" name="restaurantCategories" id="restaurantCategories" placeholder="Fast Food, Burger, Fried"  value="<?=isset($_POST['restaurantCategories'])? $_POST['restaurantCategories']: '' ?>"/>
+                                    <input size="25"type="text" name="restaurantCategories" id="restaurantCategories" placeholder="EX. Fast Food, Burger, Fried"  value="<?=isset($_POST['restaurantCategories'])? $_POST['restaurantCategories']: '' ?>"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="restaurantRating">Star Rating:</label>
