@@ -65,7 +65,7 @@
                 <h1 class="display-4"><?=$userarray['FName'];?></h1>
                 <h1 class="display-5"><?=$userarray['Username'];?></h1>
                 <h1 class="display-5">Number of Reviews: <?=$amtOreviews;?></h1>
-                <h1 class="display-5">Average Star Reviews: <?=$avgStar;?></h1>
+                <h1 class="display-5">Average Star Reviews: <?php echo number_format((float)$avgStar, 2, '.', '');?></h1>
             </div>
             <?php $loopcount=0;
             foreach($resID as $r):?>
