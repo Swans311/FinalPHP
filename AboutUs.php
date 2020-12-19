@@ -42,9 +42,9 @@
                                 <li><u><a class="text-white" href="https://github.com/FieryXJoe">Github Profile</a></u></li>
                             </ul>
                         </div>
-                        <img class="mr-3 align-self-top" style="height: auto; width: 28%;" src="misc\images\.jpg" alt="img">
+                        <img class="mr-3 align-self-top" style="height: auto; width: 28%;" style="border-radius:1000px;" src="misc\images\JoeSBio.jpg" alt="img">
                     </div>
-                    <p>Explaination of persons part of project</p>
+                    <p>Primarily handled the PHP data access layer reponsible for 95% of it. I did a majority of the frontend php including functionality and autogeneration for search, Item/Restaurant display pages, Home page categories, and Adding reviews. Finally communicated with my team to ensure that the backend SQL & frontend HTML had everything they should and nothing they shouldn't have to work with our functions and functionality we were hoping to achieve. Made sure the full stack could work together in theory and picked up work on all ends to make sure it did in reality</p>
                 </div>
                 <div class="col px-1">
                     <div class="media mr-auto">
