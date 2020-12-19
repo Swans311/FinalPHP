@@ -1,6 +1,6 @@
 <?php 
-    include (__DIR__.'/NavBar.php');
     include (__DIR__.'/model/ModelReview.php');
+
 
     $resID=array();
     $resName=array();
@@ -39,6 +39,7 @@
         endforeach;
     }
 
+    include (__DIR__.'/NavBar.php');
 
     /*
     { ["ResReview_ID"]=> int(4) ["Restaurant_ID"]=> int(1) ["User_ID"]=> int(1) ["Review"]=> string(212) "" 
@@ -76,8 +77,7 @@
                             <!-- Adjust data-->
                             <h3>Restaurant's Name: <?=$resName[$loopcount]?></h3>
                             <h3>Stars: <?=$reviewarray['Star_lvl'];?></h3>
-                            <p style="min-height: 110px">Full text review:</p>
-                            <p><?="Review Here";?></p>
+                            <p style="min-height: 110px"><?=$txtreview[$loopcount];?></p>
                         </div>
                         <!--B Loop Start (Each food per restaurant)-->
                         <hr style="width:100%!important; border-top:2px solid white;"/>
