@@ -36,7 +36,7 @@
                                 echo '<img class="mr-3 align-self-top" style="height: auto; width: 25%;" src="misc\images\Restaurant_Test.jpg" alt="img">';
                                     echo '<div class="media-body">';
                                         echo '<div>';
-                                            echo '<h3>'.$resRev['UserName'].'</h3>';
+                                            echo $resRev['Visible']?'<h3>'.$resRev['UserName'].'</h3>':'<h3>Anonymous</h3>';
                                             echo '<h3>'.$resRev['Star_lvl'].' Stars</h3>';
                                             echo '<p style="min-height: 110px">'.$resRev['Review'].'</p>';
                                         echo '</div>';

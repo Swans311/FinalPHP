@@ -36,7 +36,7 @@
                             echo '<img class="mr-3 align-self-top" style="height: auto; width: 25%;" src="misc\images\Restaurant_Test.jpg" alt="img">';
                                 echo '<div class="media-body">';
                                     echo '<div>';
-                                        echo '<h3>'.getUsername($itemRev['User_ID']).'</h3>';
+                                        echo $itemRev['Uname_Visible']?'<h3>'.getUsername($itemRev['User_ID']).'</h3>':"<h3>Anonymous</h3>";
                                         echo '<h3>'.$itemRev['Star_lvl'].' Stars</h3>';
                                         echo '<p>'.$itemRev['Review'].'</p>';
                                     echo '</div></div></div></div>';
