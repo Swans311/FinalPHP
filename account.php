@@ -1,11 +1,12 @@
 <?php 
+    include (__DIR__.'/NavBar.php');
     include (__DIR__.'/model/ModelReview.php');
-
 
     $resID=array();
     $resName=array();
     $stars=array();
     $txtreview=array();
+    $resreview=array();
     $foodname=array();
     $foodstars=array();
     $itemreview=array();
@@ -18,7 +19,7 @@
         $upassword=sha1($_SESSION['upassword']);
         $uID=getUserID($userEmail);
         $userarray=getUserByID($uID);
-        $reviewarray=getAllReviewsByUser($uID);
+        $reviewarray=getAllResReviewsByUser($uID);
         $amtOreviews=count($reviewarray);
         $revTable=getAllReviewsByUser($uID);
         $avgStar=calculateAvgStarRatingFromUser($uID);
@@ -26,6 +27,7 @@
             array_push($resID, $reviewarray['Restaurant_ID']);
             $resname=getRestaurantName($reviewarray['Restaurant_ID']);
             array_push($resName,$resname);
+            array_push($resreview,$reviewarray['Review']);
             
         }
         endforeach;
@@ -39,7 +41,6 @@
         endforeach;
     }
 
-    include (__DIR__.'/NavBar.php');
 
     /*
     { ["ResReview_ID"]=> int(4) ["Restaurant_ID"]=> int(1) ["User_ID"]=> int(1) ["Review"]=> string(212) "" 
@@ -77,7 +78,8 @@
                             <!-- Adjust data-->
                             <h3>Restaurant's Name: <?=$resName[$loopcount]?></h3>
                             <h3>Stars: <?=$reviewarray['Star_lvl'];?></h3>
-                            <p style="min-height: 110px"><?=$txtreview[$loopcount];?></p>
+                            <p style="min-height: 110px"><?=$resreview[$loopcount];?></p>
+
                         </div>
                         <!--B Loop Start (Each food per restaurant)-->
                         <hr style="width:100%!important; border-top:2px solid white;"/>
