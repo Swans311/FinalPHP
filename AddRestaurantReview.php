@@ -198,14 +198,14 @@
                     + `</div>`
                     + `<div class="form-group">`
                         + `<label for="foodRating`+x+`">Star Rating:</label>`
-                        + `<input type="number" name="foodRating`+x+`" id="foodRating`+x+`" min="0" max="5" step="0.1" />`
+                        + `<input type="number" name="foodRating`+x+`" id="foodRating`+x+`" min="0" max="5" step="1" />`
                     + `</div>`
                 + `</div>`
                 + `<div class="col form-group">`
                     + `<div class="d-flex justify-content-end mb-2">`
                     + `<h2 class="text-white mr-auto" style="font-family: textFont">Review</h2>`
                 + `</div>`
-                + `<textarea class="form-control" name="foodReview1" rows="4"></textarea>`
+                + `<textarea class="form-control" name="foodReview`+x+`" rows="4"></textarea>`
                 + `</div></div></div>`;
         }
     }
@@ -243,11 +243,11 @@
                                     <input size="25"type="text" name="restaurantURL" placeholder="URL" value="<?=$restaurant['Restaurant_URL']?>"/>
                                 </div>
                                 <div class="form-group">
-                                    <input size="25"type="text" name="restaurantCategories" id="restaurantCategories" placeholder="Categories"  value="<?=isset($_POST['restaurantCategories'])? $_POST['restaurantCategories']: '' ?>"/>
+                                    <input size="25"type="text" name="restaurantCategories" id="restaurantCategories" placeholder="Fast Food, Burger, Fried"  value="<?=isset($_POST['restaurantCategories'])? $_POST['restaurantCategories']: '' ?>"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="restaurantRating">Star Rating:</label>
-                                    <input type="number" name="restaurantRating" id="restaurantRating" min="0" max="5" step="0.1" value="<?=isset($_POST['restaurantRating'])? $_POST['restaurantRating']: '' ?>"/>
+                                    <input type="number" name="restaurantRating" id="restaurantRating" min="0" max="5" step="1" value="<?=isset($_POST['restaurantRating'])? $_POST['restaurantRating']: '' ?>"/>
                                 </div>
                             </div>
                             <div class="col form-group">
@@ -273,7 +273,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="foodRating1">Star Rating:</label>
-                                    <input type="number" name="foodRating1" id="foodRating1" min="0" max="5" step="0.1" value="<?=isset($_POST['foodRating1'])? $_POST['foodRating1']: '' ?>"/>
+                                    <input type="number" name="foodRating1" id="foodRating1" min="0" max="5" step="1" value="<?=isset($_POST['foodRating1'])? $_POST['foodRating1']: '' ?>"/>
                                 </div>
                             </div>
                             <div class="col form-group">

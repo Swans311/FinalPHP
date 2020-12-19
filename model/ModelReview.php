@@ -164,7 +164,6 @@
         $stmt->bindValue(':resRevID', $resReviewID);
 
         $stmt->execute ();
-        var_dump($stmt->rowCount());
         return( $stmt->rowCount() > 0);
     }
     function addRestaurantReview($restaurantID, $userID, $restaurantReview, $rating,  $anonymous, $imageFilePath, $itemReview2DList, $categories)
@@ -201,7 +200,6 @@
         //loop throught list and call addItemReview()
         foreach($itemReview2DList as $itemReviewList)
         {
-            var_dump($itemReviewList);
             addItemReview($restaurantID, $userID, $itemReviewList['itemID'], $resRevID, $time, $itemReviewList['category'], $itemReviewList['rating'], $itemReviewList['review'], $anonymous, ''/*$itemReviewList['imageFilePath']*/);
         }
     }
