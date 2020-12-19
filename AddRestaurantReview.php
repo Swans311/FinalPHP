@@ -186,8 +186,8 @@
             + `<div class="row mx-2 p-1">`
                 + `<div class="col form-group">`
                     + `<h2 class="display-5 mb-5">Food Item Review</h2>`
-                    + `<label for="exampleFormControlFile`+ x +`">Upload Image Here:</label>`
-                    + `<input type="file" class="form-control-file" id="exampleFormControlFile`+ x +`">`
+                    + `<label for="exampleFormControlFile`+ x +`">Upload Image Here: (Non-Funtional)</label>`
+                    + `<input type="file" class="form-control-file" id="exampleFormControlFile`+ x +`" disabled>`
                 + `</div>`
                 + `<div class="col">`
                     + `<div class="form-group mt-4">`
@@ -221,9 +221,9 @@
                         <div class="row mx-2 p-1">
                             <div class="col form-group">
                                 <h2 class="display-5 mb-5">Restaurant Review</h2>
-                                <label for="exampleFormControlFile1">Upload Image Here:</label>
+                                <label for="exampleFormControlFile1">Upload Image Here: (Non-Funtional)</label>
                                 <!--TODO:: Make this stick around after a POST-->
-                                <input type="file" class="form-control-file" name="restaurantImage" id="exampleFormControlFile1">
+                                <input type="file" class="form-control-file" name="restaurantImage" id="exampleFormControlFile1" disabled>
                                 <div class="form-check mt-5">
                                     <input class="form-check-input" name="reviewAnonymous" type="checkbox" value="" id="reviewAnonymous" <?=isset($_POST['reviewAnonymous'])? "checked" : "" ?>>
                                     <label class="form-check-label" for="reviewAnonymous"> Review Anonymously</label>
@@ -260,8 +260,8 @@
                         <div class="row mx-2 p-1">
                             <div class="col form-group">
                                 <h2 class="display-5 mb-5">Food Item Review</h2>
-                                <label for="exampleFormControlFile1">Upload Image Here:</label>
-                                <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                <label for="exampleFormControlFile1">Upload Image Here: (Non-Funtional)</label>
+                                <input type="file" class="form-control-file" id="exampleFormControlFile1" disabled>
                                 
                             </div>
                             <div class="col">
