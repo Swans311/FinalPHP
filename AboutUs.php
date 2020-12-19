@@ -42,7 +42,7 @@
                                 <li><u><a class="text-white" href="https://github.com/FieryXJoe">Github Profile</a></u></li>
                             </ul>
                         </div>
-                        <img class="mr-3 align-self-top" style="height: auto; width: 28%;" src="misc\images\Casey_Bio.jpg" alt="img">
+                        <img class="mr-3 align-self-top" style="height: auto; width: 28%;" src="misc\images\.jpg" alt="img">
                     </div>
                     <p>Explaination of persons part of project</p>
                 </div>
@@ -55,9 +55,8 @@
                                 <li><u><a class="text-white"href="https://github.com/Swans311">Github Profile</a></u></li>
                             </ul>
                         </div>
-                        <img class="mr-3 align-self-top" style="height: auto; width: 28%;" src="misc\images\Casey_Bio.jpg" alt="img">
                     </div>
-                    <p>Explaination of persons part of project</p>
+                    <p>My part of this project was managing the SQL database and adjusting the tables to fit the data. As well as that, I also built and implemented the login/logout, Signup, and account viewing systems. Along with Joe, we built the homepage and functional buttons on it as well. We were mainly responsible for any/all PHP, SQLand the implentation of it.</p>
                 </div>
             </div>
         </div>
